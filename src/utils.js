@@ -16,15 +16,13 @@ export const filterUsersByBounds = (users, bounds, distance) => {
 };
 
 export const sortUsersByDistance = (users, center) => {
-  console.log(users)
-  console.log(center)
   return users.sort((a, b) => {
     const { lat: lat1, lng: lng1 } = a.coordinates;
     const { lat: lat2, lng: lng2 } = b.coordinates;
     const distance1 = calculateDistance(center.lat, center.lng, lat1, lng1);
     const distance2 = calculateDistance(center.lat, center.lng, lat2, lng2);
     return distance1 - distance2;
-  }); 
+  });
 };
 
 export const filterUsersByDistance = (users, bounds, radius) => {
