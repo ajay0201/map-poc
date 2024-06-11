@@ -10,8 +10,7 @@ import { filterUsersByBounds, sortUsersByDistance } from "./utils";
 const App = () => {
   const [filteredUsers, setFilteredUsers] = useState(users);
 
-  // const distance = useRef(0);
-  const [distance, setDistance] = useState(0);
+  const distance = useRef(0);
 
   const [center, setCenter] = useState({ lat: 37.7749, lng: -122.4194 });
 
@@ -19,7 +18,11 @@ const App = () => {
     // console.log("CENTER::", bounds.getCenter());
     const cen = bounds.getCenter();
     setCenter({ lat: cen.lat(), lng: cen.lng() });
-    const newFilteredUsers = filterUsersByBounds(users, bounds, distance);
+    const newFilteredUsers = filterUsersByBounds(
+      users,
+      bounds,
+      distance.current.value
+    );
     setFilteredUsers(
       sortUsersByDistance(newFilteredUsers, { lat: cen.lat(), lng: cen.lng() })
     );
@@ -37,8 +40,7 @@ const App = () => {
       <input
         type="number"
         placeholder="Enter distance in miles"
-        onChange={(e) => setDistance(e.target.value)}
-        value={distance}
+        ref={distance}
       />
       <div className="content">
         <UserList users={filteredUsers} center={center} />
